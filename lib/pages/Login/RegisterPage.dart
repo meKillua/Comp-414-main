@@ -125,7 +125,7 @@ class RegisterPage extends StatelessWidget {
                           if ((username.text.isNotEmpty &&
                                   password.text.isNotEmpty &&
                                   password2.text.isNotEmpty) &&
-                              (username.text.length <= 16 &&
+                              (username.text.length <= 32 &&
                                   username.text.length >= 5) &&
                               (password.text.length <= 24 &&
                                   password.text.length >= 8) &&
@@ -151,7 +151,7 @@ class RegisterPage extends StatelessWidget {
                                     .showSnackBar(failBar);
                               }
                             } catch (E) {
-                              print(E);
+                              //print(E);
                               //on timeout
                               /*ScaffoldMessenger.of(context)
                                   .showSnackBar(failBar);*/
