@@ -36,6 +36,11 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
             includeUpperCase: includeUpper));
   }
 
+  var lowerCaseList = "qwertyuopasdfghjklizxcvbnm";
+  var upperCaseList = "ABCDEWGHIJKLMNOPRSTUVYZQWX";
+  var numberList = "0123456789";
+  var miscList = "!_?*&%+-.,^#:";
+
   void _generatePassword(
       {int length = 4,
       bool includeNumbers = true,
@@ -45,11 +50,6 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
     ScaffoldMessenger.of(context).clearSnackBars();
 
     bool doGenerate = false;
-
-    var lowerCaseList = "qwertyuopasdfghjklizxcvbnm";
-    var upperCaseList = "ABCDEWGHIJKLMNOPRSTUVYZQWX";
-    var numberList = "0123456789";
-    var miscList = "!_?*&%+-.,'^\"#:;";
 
     List<String> charList = [];
     String pass = "";
@@ -70,14 +70,31 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
         : charList = charList;
 
     if (doGenerate) {
-      for (int i = 0; i < length; i++) {
-        var currentList = charList[Random.secure().nextInt(charList.length)];
-        pass += currentList[Random.secure().nextInt(currentList.length)];
-
-        setState(() {
-          generatedPasswordField.text = pass;
-        });
+      String currentChar;
+      var currentList = charList[Random.secure().nextInt(charList.length)];
+      currentChar = currentList[Random.secure().nextInt(currentList.length)];
+      pass += currentChar;
+      for (int i = 1; i < length; i++) {
+        currentList = charList[Random.secure().nextInt(charList.length)];
+        while (true) {
+          currentChar =
+              currentList[Random.secure().nextInt(currentList.length)];
+          int difference =
+              currentChar.codeUnitAt(0).abs() - pass.codeUnitAt(i - 1);
+          int offset = Random.secure().nextInt(4) + 4;
+          if (difference.abs() >= 2 &&
+              !pass
+                  .substring(i - offset >= 0 ? i - offset : 0, i)
+                  .contains(currentChar)) {
+            // if difference is bigger than one from prev character and last 4 - 8 characters dont contain the same character
+            break;
+          }
+        }
+        pass += currentChar;
       }
+      setState(() {
+        generatedPasswordField.text = pass;
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(passFailBar);
     }
@@ -90,6 +107,7 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
 
   @override
   Widget build(BuildContext context) {
+    String acceptedCharactersList =  lowerCaseList + upperCaseList + numberList + miscList;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -120,6 +138,10 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
                             children: [
                               Expanded(
                                 child: TextField(
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(RegExp('[$acceptedCharactersList]')),
+                                    LengthLimitingTextInputFormatter(32),
+                                  ],
                                   textAlign: TextAlign.start,
                                   decoration: const InputDecoration(
                                     border: InputBorder.none,
@@ -287,6 +309,10 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
                             children: [
                               Flexible(
                                 child: TextField(
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.allow(RegExp('[$acceptedCharactersList]')),
+                                    LengthLimitingTextInputFormatter(32),
+                                  ],
                                   textAlign: TextAlign.start,
                                   decoration: const InputDecoration(
                                     hintText: 'Description',
@@ -315,7 +341,7 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
                             width: double.infinity,
                             child: ElevatedButton(
                                 onPressed: () async {
-                                  if (passDescriptionField.text.isNotEmpty) {
+                                  if (passDescriptionField.text.length >=4 && generatedPasswordField.text.length >= 4) {
                                     createPassword(
                                         FirebaseAuth.instance.currentUser!.uid,
                                         passDescriptionField.text,
@@ -329,7 +355,18 @@ class _PasswordGenerateState extends State<PasswordGenerate> {
                                       passDescriptionField.text = "";
                                     });
                                   } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(descFailBar);
+                                    if (passDescriptionField.text.isEmpty) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(descFailBar);
+                                    } else if(passDescriptionField.text.length < 4) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(descLengthFailBar);
+                                    } else if (generatedPasswordField.text.length < 4) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(passLengthFailBar);
+
+                                    }
+
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(elevation: 8),
@@ -380,6 +417,14 @@ const failBar = SnackBar(
 const passLengthFailBar = SnackBar(
   content: Text(
     'Please keep your password between 4 - 32 characters',
+    style: TextStyle(color: Colors.white),
+  ),
+  backgroundColor: Colors.red,
+);
+
+const descLengthFailBar = SnackBar(
+  content: Text(
+    'Please keep your description between 4 - 32 characters',
     style: TextStyle(color: Colors.white),
   ),
   backgroundColor: Colors.red,
