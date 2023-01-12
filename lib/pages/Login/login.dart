@@ -26,7 +26,7 @@ class Login extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text(""),
+            title: const Text(""),
               backgroundColor: Colors.purple,
             bottom: const TabBar(
               tabs: [
@@ -49,7 +49,7 @@ class Login extends StatelessWidget {
                         color: Colors.transparent,
                         border: Border.all(
                             color: Colors.purple),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                             Radius.circular(
                                 15.0),
                           //                 <--- border radius here
@@ -59,7 +59,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 15.0,right: 15.0),
                         child: TextField(
                           controller: _emailController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "E-mail",hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
                           ),
@@ -79,7 +79,7 @@ class Login extends StatelessWidget {
                         color: Colors.transparent,
                         border: Border.all(
                             color: Colors.purple),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(
                               15.0),
                           //                 <--- border radius here
@@ -89,7 +89,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 15.0,right: 15.0),
                         child: TextField(
                           controller: _passwordController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Password",hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
                           ),
@@ -107,7 +107,6 @@ class Login extends StatelessWidget {
                  child: Align(
                    alignment: Alignment.centerRight,
                    child: ElevatedButton(
-                       child: Text('Sign-In'),
                        style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
                        onPressed: ()  async {
                          String value2 = Crypt.sha256(_passwordController.text, salt: 'abcdefghijklmnop').toString();
@@ -117,8 +116,8 @@ class Login extends StatelessWidget {
                              MaterialPageRoute(builder: (context) =>  Home()),
                            );
                          }
-
-                       }
+                       },
+                       child: const Text('Sign-In')
                    ),
                  ) ,
                  )
@@ -136,7 +135,7 @@ class Login extends StatelessWidget {
                         color: Colors.transparent,
                         border: Border.all(
                             color: Colors.purple),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(
                               15.0),
                           //                 <--- border radius here
@@ -146,7 +145,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 15.0,right: 15.0),
                         child: TextField(
                           controller: _nameController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Name Surname",hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
                           ),
@@ -166,7 +165,7 @@ class Login extends StatelessWidget {
                         color: Colors.transparent,
                         border: Border.all(
                             color: Colors.purple),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(
                               15.0),
                           //                 <--- border radius here
@@ -176,7 +175,7 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 15.0,right: 15.0),
                         child: TextField(
                           controller: _emailController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "E-mail",hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
                           ),
@@ -197,7 +196,7 @@ class Login extends StatelessWidget {
                         color: Colors.transparent,
                         border: Border.all(
                             color: Colors.purple),
-                        borderRadius: BorderRadius.all(
+                        borderRadius: const BorderRadius.all(
                           Radius.circular(
                               15.0),
                           //                 <--- border radius here
@@ -207,12 +206,12 @@ class Login extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 15.0,right: 15.0),
                         child: TextField(
                           controller: _passwordController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Password",hintStyle: TextStyle(color: Colors.grey),
                             border: InputBorder.none,
                           ),
                           cursorColor: Colors.purple,
-                          style: TextStyle(color: Colors.purple),
+                          style: const TextStyle(color: Colors.purple),
                           obscureText: true,
                           enableSuggestions: false,
                           autocorrect: false,
@@ -225,7 +224,6 @@ class Login extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                          child: Text('Sign-Up'),
                           style: ElevatedButton.styleFrom(backgroundColor: Colors.purple),
                           onPressed: ()  async {
                             var appleInBytes = utf8.encode(_passwordController.text);
@@ -240,12 +238,9 @@ class Login extends StatelessWidget {
                               );
 
                             }
-                            print(FirebaseAuth.instance.currentUser.toString());
-
-
-
-
-                          }
+                            //print(FirebaseAuth.instance.currentUser.toString());
+                          },
+                          child: const Text('Sign-Up')
                       ),
                     ) ,
                   )

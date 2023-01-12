@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:comp414/utils/functions.dart';
 import 'package:crypt/crypt.dart';
+import 'package:local_auth/local_auth.dart';
+import 'package:comp414/main.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -120,9 +127,15 @@ class LoginPage extends StatelessWidget {
                                     if (await signIn(username.text, value2)) {
                                       //on success
                                       Navigator.pushNamed(context, '/home');
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      prefs.setString("e_mail", username.text);
+                                      prefs.setString(
+                                          "password", password.text);
                                     } else {
                                       //on wrong login
-                                      ScaffoldMessenger.of(context).showSnackBar(wrongBar);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(wrongBar);
                                     }
                                   } catch (E) {
                                     //on timeout

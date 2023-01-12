@@ -20,15 +20,15 @@ Future<bool> register(String email, String password) async {
 
   } on FirebaseAuthException catch (e) {
     if (e.code == 'weak-password') {
-      print('The password provided is too weak.');
+      //print('The password provided is too weak.');
     } else if (e.code == 'email-already-in-use') {
-      print('The account already exists for that email.');
+      //print('The account already exists for that email.');
     }else{
-      print(e.code);
+      //print(e.code);
     }
     return false;
   } catch (e) {
-    print(e);
+    //print(e);
     return false;
   }
 }
@@ -43,9 +43,9 @@ Future<bool> signIn(String email, String password) async {
     return true;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
-      print('No user found for that email.');
+      //print('No user found for that email.');
     } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+      //print('Wrong password provided for that user.');
     }
     return false;
   }
@@ -96,4 +96,9 @@ decryptPassword(String password){
   String decrypted = privateKey.decryptOaepToUtf8(password);
 
   return decrypted;
+}
+
+bool checkPassword(String password) {
+
+  return false;
 }

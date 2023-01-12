@@ -4,18 +4,16 @@ import 'package:crypt/crypt.dart';
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../home/home.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
 
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    // CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     return GestureDetector(
       onTap: () {
@@ -117,7 +115,7 @@ class RegisterPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: SizedBox(
-                      width: double.infinity,
+                        width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () async {
                           ScaffoldMessenger.of(context).clearSnackBars();

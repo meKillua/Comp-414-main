@@ -1,9 +1,11 @@
+import 'package:comp414/pages/Login/LoginHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:comp414/pages/login/LoginPage.dart';
 import 'package:comp414/pages/login/RegisterPage.dart';
 import 'package:comp414/pages/home/HomePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,9 +19,11 @@ class PasswordManager extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
+        '/' : (context) => const LoginHandler(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/home': (context) => const HomePage(),
