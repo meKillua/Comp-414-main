@@ -5,9 +5,16 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  bool hidePass = true;
+  bool hidePass2 = true;
   @override
   Widget build(BuildContext context) {
     // double width = MediaQuery.of(context).size.width;
@@ -35,11 +42,15 @@ class RegisterPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    children: [
-                      Container(
-                        child: //Image.asset("src/logo_1.png"), insert logo maybe
-                            const Text("PM"),
+                    children: const[
+                      Icon(Icons.enhanced_encryption_outlined, color: Colors.purple, size: 125,),
+                      Text("Register and start PassPorting now!", style: TextStyle(
+
+                        fontSize: 31,
+                        fontWeight: FontWeight.w400,
                       ),
+                      textAlign: TextAlign.center,),
+
                     ],
                   ),
                   Padding(
@@ -82,34 +93,60 @@ class RegisterPage extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                      controller: password,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(),
+                    child:Row(
+                      children: [
+                        Flexible(
+                          child: TextField(
+                            controller: password,
+                            obscureText: hidePass,
+                            decoration: const InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(),
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(),
+                              ),
+                              hintText: 'Password',
+                            ),
+                          ),
                         ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(),
-                        ),
-                        hintText: 'Password',
-                      ),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                hidePass = !hidePass;
+                              });
+                            },
+                            icon: hidePass ? const Icon(Icons.remove_red_eye_outlined) : const Icon(Icons.visibility_off_outlined)),
+                      ],
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                      controller: password2,
-                      obscureText: true,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(),
+                    child:Row(
+                      children: [
+                        Flexible(
+                          child: TextField(
+                            controller: password2,
+                            obscureText: hidePass2,
+                            decoration: const InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(),
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(),
+                              ),
+                              hintText: 'Password Confirm',
+                            ),
+                          ),
                         ),
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(),
-                        ),
-                        hintText: 'Password Confirm',
-                      ),
+                        IconButton(
+                            onPressed: () {
+                              setState(() {
+                                hidePass2 = !hidePass2;
+                              });
+                            },
+                            icon: hidePass ? const Icon(Icons.remove_red_eye_outlined) : const Icon(Icons.visibility_off_outlined)),
+                      ],
                     ),
                   ),
                   Padding(

@@ -71,7 +71,14 @@ class _HomePageState extends State<HomePage> {
         body: pageList[bottomNavIndex],
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text("PM"),
+          title: Row(
+            children: const[
+              Icon(Icons.enhanced_encryption_outlined, color: Colors.purple, size: 30,),
+              Text("  PassPort", style: TextStyle(
+                fontSize: 23, fontWeight: FontWeight.w400,
+              ),),
+            ],
+          ),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: bottomNavList,

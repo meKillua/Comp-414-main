@@ -14,6 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool hidePass = true;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -69,42 +70,69 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Column(
-                      children: [
-                        Container(
-                          child: //Image.asset("src/logo_1.png"), insert logo maybe
-                              const Text("PM"),
-                        ),
+                      children: const[
+                        Icon(Icons.enhanced_encryption_outlined, color: Colors.purple, size: 125,),
+                        Text("PassPort", style: TextStyle(
+                          fontSize: 31,
+                          fontWeight: FontWeight.w700,
+                        )),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: TextField(
-                        controller: username,
-                        decoration: const InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: TextField(
+                              controller: username,
+                              decoration: const InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(),
+                                ),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(),
+                                ),
+                                hintText: 'E Mail',
+                              ),
+                            ),
                           ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'E Mail',
-                        ),
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  username.text = "";
+                                });
+                              },
+                              icon: const Icon(Icons.delete_outline)),
+                        ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: TextField(
-                        controller: password,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(),
+                      child:Row(
+                        children: [
+                          Flexible(
+                            child: TextField(
+                              controller: password,
+                              obscureText: hidePass,
+                              decoration: const InputDecoration(
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(),
+                                ),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(),
+                                ),
+                                hintText: 'Password',
+                              ),
+                            ),
                           ),
-                          border: UnderlineInputBorder(
-                            borderSide: BorderSide(),
-                          ),
-                          hintText: 'Password',
-                        ),
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  hidePass = !hidePass;
+                                });
+                              },
+                              icon: hidePass ? const Icon(Icons.remove_red_eye_outlined) : const Icon(Icons.visibility_off_outlined)),
+                        ],
                       ),
                     ),
                     Padding(

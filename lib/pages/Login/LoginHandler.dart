@@ -79,9 +79,11 @@ class _LoginHandlerState extends State<LoginHandler> {
                   color: Colors.purple,
                 ),
                 autofocus: true,
-                iconSize: 150,
+                iconSize: 125,
               ),
-              const Text("Press the lock icon to authorize"),
+              const Text("Press the lock icon to authorize", style: TextStyle(
+                fontSize: 20,
+              ), textAlign: TextAlign.center,),
             ],
           ),
         ),
